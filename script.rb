@@ -25,7 +25,7 @@ class Board
 end
 
 
-class Snail < Rectangle
+class Snail < Sprite
     def self.info()
     end
     def setXCord(x, value)
@@ -59,11 +59,10 @@ set width: board.getWidth
 set height: board.getHeight
 
 while $i <= $howManySnails do
-    ary.push(Snail.new(x: Random.new().rand(board.getWidth), y: Random.new().rand(board.getHeight), width: 10, height: 10, color: 'black', z: 20))
+    ary.push(Snail.new('art.png',x: Random.new().rand(board.getWidth), y: Random.new().rand(board.getHeight), width: 10, height: 10, color: 'black', z: 20))
     Snail.info()
     $i += 1
 end
-
 
 update do
   if tick % 10 == 0
@@ -78,5 +77,4 @@ update do
   end
   tick += 1
 end
-puts ary[0]
 show
