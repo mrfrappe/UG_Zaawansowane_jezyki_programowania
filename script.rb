@@ -34,7 +34,6 @@ class Snail < Sprite
         else
             x = x+10
         end
-#        puts "X: #@x"
     end   
     def setYCord(y, h, value)
         if y <= h and y > 0
@@ -43,11 +42,15 @@ class Snail < Sprite
             y = y+10
         end
     end
-    def eat 
-        #eat fun
+    def eat(snail)
+        if ((@x + 10>= snail.x) && (@x <= snail.x + 10 )) && ((@y + 10>= snail.y) && (@y <= snail.y + 10))
+            puts "wWykryto kolizje #{snail} x: #{snail.x}, y: #{snail.y}"
+        end
     end
-    def copulation
-        #copulation
+    def copulation(snail)
+        if ((@x + 10>= snail.x) && (@x <= snail.x + 10 )) && ((@y + 10>= snail.y) && (@y <= snail.y + 10))
+            
+        end
     end
 end
 
@@ -56,7 +59,7 @@ $i = 1
 $howManySnails = 100
 tick = 0
 
-board = Board.new(500,500, "Boardgame")
+board = Board.new(800,800, "Boardgame")
 Board.info()
 set title: board.getName
 set background: '#00B200'
@@ -70,16 +73,17 @@ while $i <= $howManySnails do
     Snail.info()
     $i += 1
 end
+
 update do
   if tick % 10 == 0
       for j in 0..ary.length-1 
+          ary[j].eat(ary[j])
           ary[j].remove
           ary[j].x = ary[j].setXCord(ary[j].x, board.getWidth, 10)
           ary[j].y = ary[j].setYCord(ary[j].y, board.getHeight, 10)
           ary[j].add
           j += 1
       end
-
   end
   tick += 1
 end
