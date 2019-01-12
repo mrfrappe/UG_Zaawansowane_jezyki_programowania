@@ -1,6 +1,7 @@
 require 'ruby2d'
 puts "Anthill"
 
+
 class Board 
     def initialize(w, h, n)
         @@width = w
@@ -37,7 +38,6 @@ class Ant < Sprite
     end   
     def setYCord(y, h, value)
         if y <= h and y > 0
-	    #yyy = Random.new(value...y)
             @@y = Random.new().rand(y- value...y + value)
         else
             @@y = Random.new().rand(y - 2*value...(y - value).abs)
@@ -49,39 +49,29 @@ class Ant < Sprite
     def getYCord
 	@@y
     end
-    def colision(j, antA, ary)
-        for i in 0..ary.length-1
-            if (antA.x == ary[i].x && antA.y == ary[i].y )
-#                && j != i
-                return true
-            else
-                return false
-            end
-        end
-    end 
+
     def crash(j, x, y, ary, toDelete)
 	stringg = "ecrash: j= #{j} j.x = #{x} j.y #{y}"
-	puts stringg
+	#puts stringg
 	for i in 0..ary.length-1
-		if i == j
-			puts 'to oryginalna mrowka'
-		end
-		if (i != j && x == ary[i].x && y == ary[i].y)
-			#ary.delete_at(j)
-			puts 'HAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALOOOOOOOOOOOOOOOOOOOOO'
-			puts "do usuniecia mrowka o pozycji #{j}"
-			toDelete.push(j)
-			#ary[j].remove
+	# i!= j because the position of "j" ant is passed and we looking for another ants and which affects the ants j.
+		if (i!= j && (x-$antWidth/2...x+$antWidth/2).include?(ary[i].x) && (y-$antHeight/2...y+$antHeight/2).include?(ary[i].y))
+			puts "do usuniecia mrowka o pozycji #{i}"
+			#if we find another ant, we push them into toDelete array
+			toDelete.push(i)
 		end
 	end
     end
 
 end
 
-ary = Array.new 
-toDelete = Array.new
+
 $i = 1
 $howManyAnts = 100
+$antWidth = 10
+$antHeight = 10
+ary = Array.new 
+toDelete = Array.new
 tick = 0
 
 board = Board.new(600,600, "Boardgame")
@@ -93,19 +83,18 @@ set diagonostics: true
 set width: board.getWidth
 set height: board.getHeight
 
+
 while $i <= $howManyAnts do
-    ary.push(Ant.new('art.png',x: Random.new().rand(board.getWidth), y: Random.new().rand(board.getHeight), w: 10, h: 10, z: 20))
+    ary.push(Ant.new('art.png',x: Random.new().rand(board.getWidth), y: Random.new().rand(board.getHeight), w: $antWidth, h: $antHeight, z: 20))
     Ant.info()
     $i += 1
 end
 
 
-
-
-
 update do
   if tick % 10 == 0
-      puts " ARRY LENGTH: #{ary.length} !!!!!!!!!!!!!!!!!!!!!!!"
+      # this puth should display in board
+      puts " ARRY LENGTH: #{ary.length}"
       #sleep(2)
       for j in 0..ary.length-1 
 	           
@@ -114,10 +103,9 @@ update do
           ary[j].y = ary[j].setYCord(ary[j].y, board.getHeight, 10)
           ary[j].add
           
-	  puts "j: #{j} :: x: #{ary[j].getXCord} i y: #{ary[j].getYCord}"
+	  #puts "j: #{j} :: x: #{ary[j].getXCord} i y: #{ary[j].getYCord}"
 
 	  ary[j].crash(j,ary[j].getXCord, ary[j].getYCord,ary,toDelete)
-		
 
           j += 1
           
@@ -127,7 +115,7 @@ update do
 	  puts 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
           for i in 0..toDelete.length-1
 	   puts "jest #{toDelete.length} mrowek do usuniecia"
-	   index = toDelete.pop
+	   index = toDelete.shift
 	   ary[index].remove
 	   ary.delete_at(index)
 	   puts "mrowka #{index} usnieta"
