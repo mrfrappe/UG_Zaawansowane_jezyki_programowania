@@ -51,7 +51,7 @@ class Ant < Sprite
     def getYCord
 	@@y
     end
-
+    
     def crash(j, x, y, ary, toDelete)
 	stringg = "ecrash: j= #{j} j.x = #{x} j.y #{y}"
 	#puts stringg
@@ -67,14 +67,16 @@ class Ant < Sprite
 
 end
 
-
+startTime = Time.new
 $i = 1
 $howManyAnts = 100
 $antWidth = 10
 $antHeight = 10
 ary = Array.new 
 toDelete = Array.new
+time = Array.new
 tick = 0
+song = Music.new('sound.mp3')
 
 board = Board.new(600,600, "Boardgame")
 Board.info()
@@ -119,7 +121,10 @@ update do
           for i in 0..toDelete.length-1
 	   puts "jest #{toDelete.length} mrowek do usuniecia"
 	   index = toDelete.shift
+        endTime = Time.now
+        song.play
 	   ary[index].remove
+        time.push(endTime-startTime)
         counter.remove
 	   ary.delete_at(index)
         counter= Counter.new(x: board.getWidth - 40, y: board.getHeight - 35, text: ary.length, font: 'vera.ttf', size: 30, color: 'red', rotate: 0, z: 100)
@@ -127,8 +132,7 @@ update do
           end
       end
   end
-  
-
+  puts time
   tick += 1
     # Close the window after 1 ant left
   if ary.length == 1 then close end
