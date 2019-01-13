@@ -1,4 +1,6 @@
 require 'ruby2d'
+require 'ascii_charts'
+
 puts "Anthill"
 
 
@@ -58,7 +60,7 @@ class Ant < Sprite
 	for i in 0..ary.length-1
 	# i!= j because the position of "j" ant is passed and we looking for another ants and which affects the ants j.
 		if (i!= j && (x-$antWidth/2...x+$antWidth/2).include?(ary[i].x) && (y-$antHeight/2...y+$antHeight/2).include?(ary[i].y))
-			puts "do usuniecia mrowka o pozycji #{i}"
+			#puts "do usuniecia mrowka o pozycji #{i}"
 			#if we find another ant, we push them into toDelete array
 			toDelete.push(i)
 		end
@@ -95,11 +97,10 @@ while $i <= $howManyAnts do
     $i += 1
 end
 
-
 update do
   if tick % 10 == 0
       # this puth should display in board
-      puts " ARRY LENGTH: #{ary.length}"
+      #puts " ARRY LENGTH: #{ary.length}"
       #sleep(2)
       for j in 0..ary.length-1 
 	           
@@ -117,22 +118,25 @@ update do
       end
 	
       if toDelete.length != 0
-	  puts 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
+	  #puts 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
           for i in 0..toDelete.length-1
-	   puts "jest #{toDelete.length} mrowek do usuniecia"
+	   #puts "jest #{toDelete.length} mrowek do usuniecia"
 	   index = toDelete.shift
         endTime = Time.now
         song.play
 	   ary[index].remove
-        time.push(endTime-startTime)
+        time.push([ary.length, (endTime-startTime)])
         counter.remove
 	   ary.delete_at(index)
         counter= Counter.new(x: board.getWidth - 40, y: board.getHeight - 35, text: ary.length, font: 'vera.ttf', size: 30, color: 'red', rotate: 0, z: 100)
-	   puts "mrowka #{index} usnieta"
+	   #puts "mrowka #{index} usnieta"
           end
       end
   end
-  puts time
+    ## data must be a pre-sorted array of x,y pairs
+    chart = AsciiCharts::Cartesian.new((time), :title => 'Time/Population').draw
+    puts "\e[H\e[2J"
+    puts chart
   tick += 1
     # Close the window after 1 ant left
   if ary.length == 1 then close end
