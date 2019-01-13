@@ -90,7 +90,7 @@ set width: board.getWidth
 set height: board.getHeight
 
 
-counter = Counter.new(x: board.getWidth - 40, y: board.getHeight - 35, text: $howManyAnts, font: 'vera.ttf', size: 30, color: 'red', rotate: 0, z: 100)
+counter = Counter.new( text: $howManyAnts, x: board.getWidth - 40, y: board.getHeight - 35, font: 'vera.ttf', size: 30, color: 'red', rotate: 0, z: 100)
 
 while $i <= $howManyAnts do
     ary.push(Ant.new('art.png',x: Random.new().rand(board.getWidth), y: Random.new().rand(board.getHeight), w: $antWidth, h: $antHeight, z: 20))
@@ -128,7 +128,7 @@ update do
         time.push([ary.length, (endTime-startTime)])
         counter.remove
 	   ary.delete_at(index)
-        counter= Counter.new(x: board.getWidth - 40, y: board.getHeight - 35, text: ary.length, font: 'vera.ttf', size: 30, color: 'red', rotate: 0, z: 100)
+        counter= Counter.new(text: ary.length, x: board.getWidth - 40, y: board.getHeight - 35, font: 'vera.ttf', size: 30, color: 'red', rotate: 0, z: 100)
 	   #puts "mrowka #{index} usnieta"
           end
       end
