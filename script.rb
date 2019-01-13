@@ -24,11 +24,13 @@ class Board
     end
 end
 
+class Counter < Text
+    def setText(text)
+        @@text = text
+    end
+end
 
 class Ant < Sprite
-
-    def self.info()
-    end
     def setXCord(x, w, value)
         if x <= w and x > 0
             @@x = Random.new().rand(x - value...x + value)
@@ -84,9 +86,10 @@ set width: board.getWidth
 set height: board.getHeight
 
 
+counter = Counter.new(x: board.getWidth - 40, y: board.getHeight - 35, text: $howManyAnts, font: 'vera.ttf', size: 30, color: 'red', rotate: 0, z: 100)
+
 while $i <= $howManyAnts do
     ary.push(Ant.new('art.png',x: Random.new().rand(board.getWidth), y: Random.new().rand(board.getHeight), w: $antWidth, h: $antHeight, z: 20))
-    Ant.info()
     $i += 1
 end
 
@@ -117,7 +120,9 @@ update do
 	   puts "jest #{toDelete.length} mrowek do usuniecia"
 	   index = toDelete.shift
 	   ary[index].remove
+        counter.remove
 	   ary.delete_at(index)
+        counter= Counter.new(x: board.getWidth - 40, y: board.getHeight - 35, text: ary.length, font: 'vera.ttf', size: 30, color: 'red', rotate: 0, z: 100)
 	   puts "mrowka #{index} usnieta"
           end
       end
@@ -125,5 +130,7 @@ update do
   
 
   tick += 1
+    # Close the window after 1 ant left
+  if ary.length == 1 then close end
 end
 show
