@@ -1,0 +1,111 @@
+   207.2: flog total
+    23.0: flog/method average
+
+   100.9: main#none
+    13.8:   assignment
+    11.9:   new
+    10.5:   length
+     7.6:   -
+     6.6:   getWidth
+     6.6:   getHeight
+     6.6:   set
+     6.4:   lit_fixnum
+     6.3:   branch
+     4.2:   +
+     3.7:   []
+     3.4:   rand
+     3.0:   push
+     2.6:   ==
+     2.2:   require
+     1.7:   shift
+     1.7:   upDateC
+     1.7:   playSong
+     1.7:   delete_at
+     1.7:   remove
+     1.7:   now
+     1.6:   updatePosition
+     1.5:   !=
+     1.5:   %
+     1.4:   close
+     1.3:   drawChart
+     1.3:   getName
+     1.2:   <=
+     1.1:   update
+     1.1:   info
+     1.1:   puts
+     1.1:   show
+
+    29.1: Ant#crash                        script.rb:70-79
+     6.8:   /
+     4.1:   -
+     3.4:   branch
+     3.4:   []
+     3.0:   +
+     2.6:   include?
+     2.2:   lit_fixnum
+     2.2:   assignment
+     1.5:   x
+     1.5:   y
+     1.3:   length
+     1.2:   push
+     1.2:   !=
+
+    28.7: Ant#updatePosition               script.rb:60-66
+    14.7:   []
+     2.2:   assignment
+     1.3:   getYCord
+     1.3:   x
+     1.3:   getWidth
+     1.3:   getXCord
+     1.3:   getHeight
+     1.3:   y
+     1.1:   setYCord
+     1.1:   add
+     1.1:   crash
+     1.1:   remove
+     1.1:   setXCord
+     0.6:   lit_fixnum
+
+    17.0: Ant#setXCord                     script.rb:40-45
+     4.4:   -
+     2.8:   new
+     2.4:   rand
+     2.2:   branch
+     1.6:   *
+     1.4:   +
+     1.4:   abs
+     1.2:   <=
+     1.2:   >
+     0.4:   lit_fixnum
+
+    17.0: Ant#setYCord                     script.rb:47-52
+     4.4:   -
+     2.8:   new
+     2.4:   rand
+     2.2:   branch
+     1.6:   *
+     1.4:   +
+     1.4:   abs
+     1.2:   <=
+     1.2:   >
+     0.4:   lit_fixnum
+
+     6.2: Counter#upDateC                  script.rb:33-35
+     2.6:   -
+     1.4:   lit_fixnum
+     1.1:   new
+     1.1:   remove
+
+     4.7: main#drawChart                   script.rb:113-117
+     2.2:   puts
+     1.3:   new
+     1.1:   draw
+     1.1:   assignment
+
+     2.4: main#playSong                    script.rb:119-120
+     1.3:   new
+     1.1:   play
+
+     1.1: Board::info                      script.rb:24-25
+     1.1:   puts
+
