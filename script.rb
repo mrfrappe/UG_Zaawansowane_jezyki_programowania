@@ -57,6 +57,15 @@ class Ant < Sprite
     def getYCord
 	@@y
     end
+    def updatePosition(ary,j, board)
+	ary[j].remove
+          ary[j].x = ary[j].setXCord(ary[j].x, board.getWidth, 10)
+          ary[j].y = ary[j].setYCord(ary[j].y, board.getHeight, 10)
+          ary[j].add
+          
+	  ary[j].crash(j,ary[j].getXCord, ary[j].getYCord,ary,$toDelete)
+
+    end
     
     def crash(j, x, y, ary, toDelete)
 	stringg = "ecrash: j= #{j} j.x = #{x} j.y #{y}"
@@ -66,7 +75,7 @@ class Ant < Sprite
 		if (i!= j && (x-$antWidth/2...x+$antWidth/2).include?(ary[i].x) && (y-$antHeight/2...y+$antHeight/2).include?(ary[i].y))
 			#puts "do usuniecia mrowka o pozycji #{i}"
 			#if we find another ant, we push them into toDelete array
-			toDelete.push(i)
+			$toDelete.push(i)
 		end
 	end
     end
@@ -79,10 +88,10 @@ $howManyAnts = 100
 $antWidth = 10
 $antHeight = 10
 ary = Array.new 
-toDelete = Array.new
+$toDelete = Array.new
 $time = Array.new
 tick = 0
-song = Music.new('sound.mp3')
+
 
 board = Board.new(600,600, "Boardgame")
 Board.info()
@@ -107,6 +116,9 @@ def drawChart()
     puts "\e[H\e[2J"
     puts chart
 end
+def playSong()
+    Music.new('sound.mp3').play
+end
 
 update do
   if tick % 10 == 0
@@ -114,24 +126,18 @@ update do
       #puts " ARRY LENGTH: #{ary.length}"
       #sleep(2)
       for j in 0..ary.length-1 
-	           
-          ary[j].remove
-          ary[j].x = ary[j].setXCord(ary[j].x, board.getWidth, 10)
-          ary[j].y = ary[j].setYCord(ary[j].y, board.getHeight, 10)
-          ary[j].add
+	  ary[j].updatePosition(ary,j,board)        
           
-	  ary[j].crash(j,ary[j].getXCord, ary[j].getYCord,ary,toDelete)
-
           j += 1
           
       end
 	
-      if toDelete.length != 0
-          for i in 0..toDelete.length-1
+      if $toDelete.length != 0
+          for i in 0..$toDelete.length-1
 	   #puts "jest #{toDelete.length} mrowek do usuniecia"
-	    index = toDelete.shift
+	    index = $toDelete.shift
             endTime = Time.now
-            song.play
+            playSong
 	    ary[index].remove
             $time.push([ary.length, (endTime-startTime)])
             
