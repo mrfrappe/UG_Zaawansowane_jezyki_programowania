@@ -1,0 +1,9 @@
+Total score (lower is better) = 96
+
+1) Similar code found in :defn (mass = 62)
+  script.rb:38
+  script.rb:45
+
+2) Similar code found in :defn (mass = 34)
+  script.rb:58
+  script.rb:61

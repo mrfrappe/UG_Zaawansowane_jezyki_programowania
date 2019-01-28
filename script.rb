@@ -35,19 +35,11 @@ class Counter < Text
 end
 
 class Ant < Sprite
-    def setXCord(x, w, value)
-        if x <= w and x > 0
-            @@x = Random.new().rand(x - value...x + value)
-        else
-            @@x = Random.new().rand(x - 2*value...(x-value).abs)
-        end
+    def setXCord(x, w)
+       @@x = rand(x - $antWidth...x + $antWidth)
     end   
-    def setYCord(y, h, value)
-        if y <= h and y > 0
-            @@y = Random.new().rand(y- value...y + value)
-        else
-            @@y = Random.new().rand(y - 2*value...(y - value).abs)
-        end
+    def setYCord(y, h)
+        @@y = rand(y- $antHeight...y + $antHeight)
     end
     def getXCord
 	@@x
@@ -55,18 +47,17 @@ class Ant < Sprite
     def getYCord
 	@@y
     end
-def changeXCord(ary,j,board)
-ary[j].x = ary[j].setXCord(ary[j].x, board.getWidth, 10)
+def changeCords(ary,j,board)
+ary[j].x = ary[j].setXCord(ary[j].x, board.getWidth)
+ary[j].y = ary[j].setYCord(ary[j].y, board.getHeight)
 end
-def changeYCord(ary,j,board)
-ary[j].y = ary[j].setYCord(ary[j].y, board.getHeight, 10)
-end
+
 
     def updatePosition(ary,j, board)
 
 	ary[j].remove
-changeXCord(ary,j,board)
-changeYCord(ary,j,board)
+changeCords(ary,j,board)
+
           
           
           ary[j].add
@@ -92,10 +83,9 @@ changeYCord(ary,j,board)
 end
 
 $startTime = Time.new
-$i = 1
+
 $howManyAnts = 100
-$antWidth = 10
-$antHeight = 10
+$antWidth, $antHeight = 10,10
 ary = Array.new 
 $toDelete = Array.new
 $time = Array.new
@@ -118,7 +108,8 @@ def drawChart()
     puts chart
 end
 def playSong()
-    Music.new('sound.mp3').play
+    music = Music.new('sound.mp3')
+	music.play
 end
 def removeAnts(index,ary)
 	ary[index].remove
@@ -140,9 +131,10 @@ def updateBoardView(ary,board)
         end
 end
 def insertAnts(ary,board)
-	while $i <= $howManyAnts do
-    ary.push(Ant.new('art.png',x: Random.new().rand(board.getWidth), y: Random.new().rand(board.getHeight), w: $antWidth, h: $antHeight, z: 20))
-    $i += 1
+	i = 1
+	while i <= $howManyAnts do
+    ary.push(Ant.new('art.png',x: rand(board.getWidth), y: rand(board.getHeight), w: $antWidth, h: $antHeight, z: 20))
+    i += 1
 end
 end
 
