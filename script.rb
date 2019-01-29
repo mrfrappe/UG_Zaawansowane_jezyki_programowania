@@ -72,9 +72,7 @@ changeCords(ary,j,board)
 	antWidth = $antWidth/2
 	antHeight = $antHeight/2
 	for i in 0..ary.length-1
-	# i!= j because the position of "j" ant is passed and we looking for another ants and which affects the ants j.
 		if (i!= j && (x-antWidth...x+antWidth).include?(ary[i].x) && (y-antHeight...y+antHeight).include?(ary[i].y))
-			#if we find another ant, we push them into toDelete array
 			$toDelete.push(i)
 		end
 	end
@@ -102,7 +100,6 @@ $counter = Counter.new( text: $howManyAnts, x: board.getWidth - 40, y: board.get
 
 
 def drawChart()
-## data must be a pre-sorted array of x,y pairs
     chart = AsciiCharts::Cartesian.new(($time), :title => 'Time/Population').draw
     puts "\e[H\e[2J"
     puts chart
@@ -151,7 +148,6 @@ update do
   end
   drawChart
   tick += 1
-  # Close the window after 1 ant left
   if ary.length == 1 then close end
 end
 show
